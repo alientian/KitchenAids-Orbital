@@ -29,9 +29,11 @@ Tech Stack
 4. Supabase
 5. PostgreSQL
  
+ How to access the app:
+ Scan the QR code below with Expo Go(Android) or with Camera app(ios):
  
- 
- 
+ <img width="201" alt="Screenshot 2023-05-29 at 11 39 55 AM" src="https://github.com/alientian/KitchenAids-Orbital/assets/122381620/7ab376ff-3dbf-4f78-a475-5c18f2aecc94">
+
 
 Activity diagram
 
