@@ -14,7 +14,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function App() {
+export default function NotificationScreen() {
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -27,7 +27,7 @@ export default function App() {
         position: 'absolute-center'
     
      }
-})
+  })
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -70,7 +70,7 @@ async function schedulePushNotification() {
       title: "You've got expired food!",
       body: 'Please finish it soon',
     },
-    trigger: { seconds: 60*60*24, repeats: false },
+    trigger: { seconds: 60, repeats: false },
   });
 }
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, useWindowDimensions, Text } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import IndexScreen from '.';
+import IndexScreen from './index';
 import ExpiringScreen from './expiring';
 
 const SecondRoute = () => (

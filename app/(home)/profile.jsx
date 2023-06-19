@@ -5,6 +5,8 @@ import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../contexts/auth";
 import { useRouter } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
+import Notification from "./notification";
+import NotificationScreen from "./notification";
 
 export default function Profile() {
     const logo = require("../(auth)/New.png")
@@ -81,6 +83,11 @@ export default function Profile() {
         setImage(null);
     }
 
+    const handleNoti = async () => {
+        NotificationScreen;
+        await NotificationScreen.schedulePushNotification();
+    }
+
     return <View style={styles.container}>
         {/* <Text style={styles.Text}>Profile pic:</Text>
         {profile.Avatar_url && <Image 
@@ -103,6 +110,9 @@ export default function Profile() {
         {loading && <ActivityIndicator />}
 
         <Button style={styles.Button} onPress={() => supabase.auth.signOut()}>Logout</Button>
+
+        <Button style ={styles.Button}
+        onPress={handleNoti}>Schedule a notification</Button>
         
     </View>;
 }
