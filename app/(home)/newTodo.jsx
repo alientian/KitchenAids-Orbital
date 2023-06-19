@@ -1,66 +1,184 @@
-import { useState } from "react";
-import { View, Image } from "react-native";
-import { Text, TextInput, Button, ActivityIndicator } from "react-native-paper";
-import { supabase } from "../../lib/supabase";
-import { useAuth } from "../../contexts/auth";
-import { useRouter } from "expo-router";
-import * as ImagePicker from 'expo-image-picker';
+import {Button, ScrollView, StyleSheet, Switch, Text, TextInput, View} from 'react-native'
+import React from 'react'
 
+let id = 0;
 
-export default function NewTodo() {
-    const [title, setTitle] = useState('');
-    const [errMsg, setErrMsg] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [image, setImage] = useState(null);
-    const { user } = useAuth();
-    const router = useRouter();
+const Todo = props => (
+    <View style = {styles.item}>
+        <View style = {styles.left}>
+          <Switch value = {props.todo.checked} onValueChange = {props.onToggle}/>
+          <Text style={styles.text}>{props.todo.text}</Text>
+        </View>
+        <View>
+            <Button  
+              title = "Delete" 
+              onPress = { props.onDelete} 
+              style = {styles.circular}
+            />
+        </View>
+    </View>
+)
 
-    const handleAddImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images });
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
-        }
+export default class App extends React.Component{
+    constructor()
+    {
+      super();
+      this.state = {
+        text: "",
+        todos: [],
+      };
     }
 
-    const handleSubmit = async () => {
-        setErrMsg('');
-        if (title === '') {
-            setErrMsg('title cannot be empty')
-            return;
-        }
-        setLoading(true);
-        let uploadedImage = null;
-        if (image != null) {
-            const { data, error } = await supabase.storage.from('images').upload(`${new Date().getTime()}`, { uri: image, type: 'jpg', name: 'name.jpg' });
+    // add TODO
+    addTodo()
+    {
+      id++;
+      if(this.state.text !== "")
+      {
+        this.setState({
+          todos: [
+            ...this.state.todos, { id: id++, text: this.state.text, checked: false }
+          ]
+        });
 
-            if (error != null) {
-                console.log(error);
-                setErrMsg(error.message)
-                setLoading(false);
-                return;
-            }
-            const { data: { publicUrl } } = supabase.storage.from('images').getPublicUrl(data.path);
-            uploadedImage = publicUrl;
-        }
-        const { error } = await supabase.from('todos').insert({ task: title, user_id: user.id, image_url: uploadedImage }).select().single();
-
-        if (error != null) {
-            setLoading(false);
-            console.log(error);
-            setErrMsg(error.message);
-            return;
-        }
-        setLoading(false);
-        router.push('/');
+        // Empty the input
+        this.setState({
+          text: ""
+        })
+      }
     }
 
-    return <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text>Title: </Text>
-        <TextInput value={title} onChangeText={setTitle} />
-        {errMsg !== '' && <Text>{errMsg}</Text>}
-        <Button onPress={handleAddImage}>Add Image</Button>
-        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-        <Button onPress={handleSubmit}>Submit</Button>
-        {loading && <ActivityIndicator />}
-    </View>;
+    // remove TODO
+    removeTodo(id){
+      this.setState({
+        todos: this.state.todos.filter(todo => todo.id !== id)
+      });
+    }
+    // Handle checked todo
+    toggleTodoState(id)
+    {
+      this.setState({
+        todos: this.state.todos.map(todo => {
+          if (todo.id !== id) return todo;
+          return {
+            id: todo.id,
+            text: todo.text,
+            checked: !todo.checked,
+          };
+        })
+      })
+    }
+    render()
+    {
+      return (
+        <View style = {[styles.fill, styles.AppContainer]}>
+          <View style = {styles.HeaderContainer}>
+            <View style={styles.counters}>
+               <Text>Total:</Text>
+              <Text style = {styles.count}>{this.state.todos.length}</Text>
+            </View>
+            <View style={styles.counters}>
+               <Text>Unchecked Count:</Text>
+              <Text style = {styles.count}>{this.state.todos.filter(todo => !todo.checked).length}</Text>
+            </View>
+          </View>
+          <View style = {[styles.inputContainer]}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter item to buy"
+              keyboardType = "alphanumeric"
+              value = {this.state.text}
+              onChangeText={(text) => this.setState({text})}
+            />
+            <Button 
+              style = {styles.button}
+              title = "Add"
+              onPress={() => this.addTodo()} 
+            />
+          </View>
+          <ScrollView style = {styles.fill}>
+            {this.state.todos.map( todo => (
+               <Todo
+                todo = {todo}
+                onDelete = {() => this.removeTodo(todo.id)} 
+                onToggle = {() => this.toggleTodoState(todo.id)}
+                key = {todo.id} 
+               />
+            ))}
+          </ScrollView>
+        </View>
+      );
+    }
 }
+
+const styles = StyleSheet.create({
+  AppContainer: {
+    paddingTop: 45,
+    backgroundColor: "#e8eaed",
+  },
+  HeaderContainer: {
+    flexDirection: 'row', 
+    justifyContent: "space-around",
+    paddingVertical: 15,
+    paddingHorizontal:10,
+    margin: 20,
+    borderRadius: 20,
+    backgroundColor: "#fff"
+  },
+  fill: {
+    flex: 1
+  },
+  inputContainer: {
+    flexDirection: 'row', 
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 10
+  },
+  counters: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  count: {
+    fontWeight: "bold",
+    marginHorizontal: 5,
+    color: "#55bcf6",
+
+  },
+  input: {
+    height: 45,
+    width: 300,
+    borderWidth: 0.5,
+    padding: 10,
+    borderRadius: 50,
+  },
+  button: {
+    height: 40,
+    padding: 10,
+  },
+  item: {
+    backgroundColor: '#fff',
+    padding: 5,
+    borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: 5,
+    marginBottom: 10,
+  },
+  left: {
+    flexDirection: 'row',
+    alignItems: "center",
+    flexWrap: "wrap"
+  },
+  circular:{
+    height: 40,
+    padding: 10,
+    borderColor: '#55bcf6',
+    borderWidth: 2,
+    borderRadius: 5 
+  },
+  text: {
+    maxWidth: "80%",
+    marginLeft: 10
+  },
+})

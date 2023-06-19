@@ -3,14 +3,21 @@ import { supabase } from '../../lib/supabase';
 import { useEffect, useState } from 'react';
 import { Text, Button, ActivityIndicator} from 'react-native-paper';
 
-export default function IndexScreen() {
+export default function ExpiringScreen() {
     const [productName, setProductName] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [date, setDate] = useState(null);
+
+    useEffect(() => {
+        let today = new Date();
+        let date = today.getFullYear()*10000+(today.getMonth()+2)*100+today.getDate();
+        setDate(date);
+    }, []);
 
     async function fetchTodos() {
         setRefreshing(true);
-        let { data } = await supabase.from('ExistingFood').select('*');
+        let { data } = await supabase.from('ExistingFood').select('*').lte('Expiry_Date', date);
         setRefreshing(false);
         setProductName(data);
     }
@@ -35,7 +42,7 @@ export default function IndexScreen() {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            
+
             <SafeAreaView style={{width: 350}}>
                 <FlatList
                     data={productName}
@@ -67,4 +74,3 @@ export default function IndexScreen() {
         </View>
     );
 }
-
