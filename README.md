@@ -12,7 +12,7 @@ We hope to make the kitchen more well organised and reduce food wastage through 
 The iOS app, KitchenAids, provides a planner for users to keep track of their food supplies in the kitchen.
 
 How to try our app:
-1. Refer to our code here: https://gitfront.io/r/user-6304479/RkG5HorVijxt/KitchenAids-Orbital.git
+1. Refer to our code here: https://gitfront.io/r/user-6304479/RkG5HorVijxt/KitchenAids-Orbital
 2. Click on “clone” and copy the url
 3. Clone the code by entering: git clone [url] in the terminal 
 4. Open the file from vscode 
