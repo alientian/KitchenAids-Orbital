@@ -4,10 +4,6 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import IndexScreen from './index';
 import ExpiringScreen from './expiring';
 
-const SecondRoute = () => (
-  <View style={{ flex: 1, }} />
-);
-
 const renderScene = SceneMap({
   first: () => <IndexScreen/>,
   second: () => <ExpiringScreen/>,

@@ -21,11 +21,10 @@ export default function NotificationScreen() {
   const responseListener = useRef();
   const styles = StyleSheet.create({
     Button: {
-        marginTop: -100000,
+        marginTop: -10,
         flex: 1, 
         height: 10,
-        position: 'absolute-center'
-    
+        position: 'absolute-center',
      }
   })
 

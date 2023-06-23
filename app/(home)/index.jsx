@@ -1,4 +1,4 @@
-import { FlatList, View, SafeAreaView } from 'react-native';
+import { FlatList, View, SafeAreaView, StyleSheet} from 'react-native';
 import { supabase } from '../../lib/supabase';
 import { useEffect, useState } from 'react';
 import { Text, Button, ActivityIndicator} from 'react-native-paper';
@@ -26,7 +26,7 @@ export default function IndexScreen() {
         }
     }, [refreshing]);
 
-    const handleDelete = async (id) => {
+    async function handleDelete(id) {
         setLoading(true);
         const { error } = await supabase.from('ExistingFood').delete().eq('id', id);
         setRefreshing(true);
@@ -34,8 +34,8 @@ export default function IndexScreen() {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        
             <SafeAreaView style={{width: 350}}>
                 <FlatList
                     data={productName}
@@ -49,13 +49,13 @@ export default function IndexScreen() {
                     renderItem={({ item: todo }) => (
                         <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 1, borderColor: "black", borderWidth: 1, borderRadius: 10 }} >
                             <View>
-                                <Text>{todo.Product_Name}</Text>
+                                <Text>Item: {todo.Product_Name}</Text>
                                 <Text>                   </Text>
-                                <Text>{todo.Product_Brand}</Text>
+                                <Text>Brand: {todo.Product_Brand}</Text>
                                 <Text>              </Text>
-                                <Text>{todo.Quantity}</Text>
+                                <Text>Quantity: {todo.Quantity}</Text>
                                 <Text>                   </Text>
-                                <Text>{todo.Expiry_Date}</Text>
+                                <Text>Expiry date: {todo.Expiry_Date}</Text>
                             </View>
 
                             <Button onPress={() => handleDelete(todo.id)}>Delete</Button>
@@ -67,4 +67,3 @@ export default function IndexScreen() {
         </View>
     );
 }
-

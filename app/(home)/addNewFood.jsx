@@ -140,12 +140,12 @@ export default function AddNewFood() {
         },
         container: {
             flex: 1,
-          },
-          scrollView: {
+        },
+        scrollView: {
             flex: 1,
             backgroundColor: 'white',
             justifyContent: 'center',
-          },
+        },
     })
 
     return <SafeAreaView style={styles.container}>

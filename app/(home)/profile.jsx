@@ -5,6 +5,8 @@ import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../contexts/auth";
 import { useRouter } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
+import NotificationScreen from "./notification";
+import { TabView, SceneMap } from 'react-native-tab-view';
 
 export default function Profile() {
     const logo = require("../(auth)/New.png")
@@ -18,19 +20,20 @@ export default function Profile() {
     const router = useRouter();
     const [refreshing, setRefreshing] = useState(false);
     const [avatar, setAvatar] = useState(null);
+
+    const fetchTodo = async () => {
+        const { data } = await supabase.from('profiles').select('*').eq('user_id', user.id).single();
+        console.log(data);
+        setProfile(data);
+    }
     
     useEffect(() => {
-        if (user) {
-            const fetchTodo = async () => {
-                const { data } = await supabase.from('profiles').select('*').eq('user_id', user.id).single();
-                console.log(data);
-                setProfile(data);
-            }
+        if (user) { 
             fetchTodo();
             setEmail(user.email);
-
         }
     }, [])
+
     if (profile == null) {
         return <ActivityIndicator />
     }
@@ -52,7 +55,7 @@ export default function Profile() {
         let uploadedImage = null;
         if (image != null) {
             const { data, error } = await supabase.storage.from('avatars')
-            .upload(`${new Date().getTime()}.jpg`, { uri: image, type: 'jpg', name: 'name.jpg' }, {
+            .upload(`${new Date().getTime()}`, { uri: image, type: 'png', name: 'name.png' }, {
                 cacheControl: '3600',
                 upsert: false
               });
@@ -76,6 +79,8 @@ export default function Profile() {
             setErrMsg(error.message);
             return;
         }
+
+        fetchTodo();
         setLoading(false);
         setUsername('');
         setImage(null);
@@ -86,8 +91,12 @@ export default function Profile() {
         await NotificationScreen.schedulePushNotification();
     }
 
-    return <View style={styles.container}>
-        <Image style={styles.Kitchenaid} resizeMode="contain" source={logo}></Image>
+    return (
+    <View style={styles.container}>
+        <Image style={styles.KitchenAid} resizeMode="contain" source={logo}></Image>
+
+        {/* <Text style={styles.Text}>Profile</Text>
+        {profile.Avatar_url && <Image source={{ uri: profile.Avatar_url }} style={{height:200, width:200}}/>} */}
 
         <Text style={styles.Text}>Email: {email}</Text>
         <Text style={styles.Text}>Username: {profile.Username}</Text>
@@ -95,23 +104,34 @@ export default function Profile() {
         <TextInput style={styles.Input} placeholder={'Enter new username'} value={username} onChangeText={setUsername} />
         {errMsg !== '' && <Text style={styles.Error}>{errMsg}</Text>}
 
-        <Button style={styles.Button} onPress={handleAddImage}>Add Image</Button>
-        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+        {/* <Button style={styles.Button} onPress={handleAddImage}>Add Image</Button>
+        {image && <Image source={{ uri: image }} style={styles.Image} />} */}
 
         <Button style={styles.Button} onPress={handleSave}>Save</Button>
         {loading && <ActivityIndicator />}
 
         <Button style={styles.Button} onPress={() => supabase.auth.signOut()}>Logout</Button>
-        
-    </View>;
+
+        <View style={{position:'absolute', bottom:'20%', left: '15%', right:'15%', }}>
+            <NotificationScreen/>
+        </View>
+    </View>
+
+    )
 }
 
 const styles = StyleSheet.create({
-    Kitchenaid: {
+    KitchenAid: {
         alignSelf: 'center',
         width: 300,
         top: -100,
 
+    },
+    Image: {
+        height:200, 
+        width:200, 
+        alignSelf: 'center', 
+        top: -200
     },
     Input: {
         borderRadius: 10,
@@ -139,11 +159,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-
     },
     Button: {
         fontFamily: 'Cochin',
         fontSize: 20,
-        top: -200
+        top: -200,
     }
 })

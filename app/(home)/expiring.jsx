@@ -1,4 +1,4 @@
-import { FlatList, View, SafeAreaView } from 'react-native';
+import { FlatList, View, SafeAreaView, StyleSheet } from 'react-native';
 import { supabase } from '../../lib/supabase';
 import { useEffect, useState } from 'react';
 import { Text, Button, ActivityIndicator} from 'react-native-paper';
@@ -56,13 +56,13 @@ export default function ExpiringScreen() {
                     renderItem={({ item: todo }) => (
                         <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 1, borderColor: "black", borderWidth: 1, borderRadius: 10 }} >
                             <View>
-                                <Text>{todo.Product_Name}</Text>
+                                <Text>Item: {todo.Product_Name}</Text>
                                 <Text>                   </Text>
-                                <Text>{todo.Product_Brand}</Text>
+                                <Text>Brand: {todo.Product_Brand}</Text>
                                 <Text>              </Text>
-                                <Text>{todo.Quantity}</Text>
+                                <Text>Quantity: {todo.Quantity}</Text>
                                 <Text>                   </Text>
-                                <Text>{todo.Expiry_Date}</Text>
+                                <Text style={{color: 'red'}}>Expiry Date: {todo.Expiry_Date}</Text>
                             </View>
 
                             <Button onPress={() => handleDelete(todo.id)}>Delete</Button>
