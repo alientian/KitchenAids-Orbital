@@ -22,7 +22,7 @@ export default function Profile() {
     const [avatar, setAvatar] = useState(null);
 
     const fetchTodo = async () => {
-        const { data } = await supabase.from('profiles').select('*').eq('user_id', user.id).single();
+        const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
         console.log(data);
         setProfile(data);
     }
@@ -35,7 +35,15 @@ export default function Profile() {
     }, [])
 
     if (profile == null) {
-        return <ActivityIndicator />
+        return (
+            <View style={styles.container}>
+                <Button style={styles.Button} onPress={() => supabase.auth.signOut()}>Logout</Button>
+
+            <View style={{position:'absolute', bottom:'20%', left: '15%', right:'15%', }}>
+                <NotificationScreen/>
+            </View>
+            </View>
+        )
     }
     
     const handleAddImage = async () => {
@@ -70,8 +78,8 @@ export default function Profile() {
             uploadedImage = publicUrl;
         }
         let { error } = await supabase.from('profiles')
-        .update({ Username: username, Avatar_url: uploadedImage })
-        .eq('user_id', user.id);
+        .update({ username: username, avatar_url: uploadedImage })
+        .eq('id', user.id);
 
         if (error != null) {
             setLoading(false);
@@ -86,11 +94,6 @@ export default function Profile() {
         setImage(null);
     }
 
-    const handleNoti = async () => {
-        NotificationScreen;
-        await NotificationScreen.schedulePushNotification();
-    }
-
     return (
     <View style={styles.container}>
         <Image style={styles.KitchenAid} resizeMode="contain" source={logo}></Image>
@@ -99,12 +102,12 @@ export default function Profile() {
         {profile.Avatar_url && <Image source={{ uri: profile.Avatar_url }} style={{height:200, width:200}}/>} */}
 
         <Text style={styles.Text}>Email: {email}</Text>
-        <Text style={styles.Text}>Username: {profile.Username}</Text>
+        <Text style={styles.Text}>Username: {profile.username}</Text>
 
         <TextInput style={styles.Input} placeholder={'Enter new username'} value={username} onChangeText={setUsername} />
         {errMsg !== '' && <Text style={styles.Error}>{errMsg}</Text>}
 
-        {/* <Button style={styles.Button} onPress={handleAddImage}>Add Image</Button>
+        {/* <Button style={styles.Button} onPress={handleAddImage}>Change Image</Button>
         {image && <Image source={{ uri: image }} style={styles.Image} />} */}
 
         <Button style={styles.Button} onPress={handleSave}>Save</Button>

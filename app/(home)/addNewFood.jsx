@@ -149,11 +149,7 @@ export default function AddNewFood() {
     })
 
     return <SafeAreaView style={styles.container}>
-    <ScrollView
-      contentContainerStyle={styles.scrollView}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
+    <ScrollView>
         <Text style={styles.Text}>Product Name: </Text>
         <TextInput style={styles.Input} clearButtonMode="always" value={productName} onChangeText={setName} />
 
@@ -180,7 +176,7 @@ export default function AddNewFood() {
         {loading && <ActivityIndicator />}
 
         <Button onPress={clear}>Clear</Button>        
-        </ScrollView>
+    </ScrollView>
     </SafeAreaView>
 }
 
