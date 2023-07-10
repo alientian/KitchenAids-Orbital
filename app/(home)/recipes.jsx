@@ -2,7 +2,7 @@
 // https://aboutreact.com/react-native-search-bar-filter-on-listview/
 
 // import React in our code
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 // import all the components we are going to use
 import {
@@ -12,19 +12,21 @@ import {
   View,
   FlatList,
   TextInput,
-  Alert, 
-  Linking
-} from 'react-native';
+  Alert,
+  Linking,
+} from "react-native";
 
 // Recipe screen to allow users to search for their recipes
 const App = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
 
   // Fetches data from online API
   useEffect(() => {
-    fetch('https://api.edamam.com/api/recipes/v2?type=public&app_id=dd2d6729&app_key=849e34f3737291063092f61ddda7d287&ingr=3%2B&cuisineType=Asian')
+    fetch(
+      "https://api.edamam.com/api/recipes/v2?type=public&app_id=dd2d6729&app_key=849e34f3737291063092f61ddda7d287&ingr=3%2B&cuisineType=Asian"
+    )
       .then((response) => response.json())
       .then((responseJson) => {
         setFilteredDataSource(responseJson.hits);
@@ -44,7 +46,7 @@ const App = () => {
         // Applying filter for the inserted text in search bar
         const itemData = item.recipe.label
           ? item.recipe.label.toUpperCase()
-          : ''.toUpperCase();
+          : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -73,19 +75,23 @@ const App = () => {
       <View
         style={{
           height: 0.5,
-          width: '100%',
-          backgroundColor: '#C8C8C8',
+          width: "100%",
+          backgroundColor: "#C8C8C8",
         }}
       />
     );
   };
-  
 
   const getItem = (item) => {
     // Function for click on an item
-    Alert.alert('Recipe', '[Ingredients : ' + item.recipe.ingredientLines + ']', 
-    [{text: 'Steps', onPress: () => Linking.openURL(item.recipe.url)},
-     {text: 'Cancel', onPress: () => console.log('Cancel Pressed')}])
+    Alert.alert(
+      "Recipe",
+      "[Ingredients : " + item.recipe.ingredientLines + "]",
+      [
+        { text: "Steps", onPress: () => Linking.openURL(item.recipe.url) },
+        { text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+      ]
+    );
   };
 
   return (
@@ -111,7 +117,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   itemStyle: {
     padding: 10,
@@ -121,8 +127,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 20,
     margin: 5,
-    borderColor: '#009688',
-    backgroundColor: '#FFFFFF',
+    borderColor: "#009688",
+    backgroundColor: "#FFFFFF",
   },
 });
 
