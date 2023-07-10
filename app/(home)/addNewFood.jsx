@@ -13,7 +13,6 @@ export default function AddNewFood() {
     const [productName, setName] = useState('');
     const [productBrand, setBrand] = useState('');
     const [quantity, setQty] = useState('');
-    const [dateBought, setDateBought] = useState('');
     const [expiryDate, setExpiry] = useState('');
     const [isVisible, setVisibility] = useState(false);
     const [errMsg, setErrMsg] = useState('');
@@ -26,7 +25,6 @@ export default function AddNewFood() {
         setName('');
         setBrand('');
         setQty('');
-        setDateBought('');
         setExpiry('');
         setImage(null);
     }
@@ -61,7 +59,7 @@ export default function AddNewFood() {
         const permission = ImagePicker.requestMediaLibraryPermissionsAsync();
 
         if (permission.granted === false) {
-            alert("You've refused to allow this appp to access your photos!");
+            alert("You've refused to allow this app to access your photos!");
           return;
         }
 
@@ -102,7 +100,7 @@ export default function AddNewFood() {
             uploadedImage = publicUrl;
         }
         const { error } = await supabase.from('ExistingFood').insert({Product_Name: productName, Product_Brand: productBrand, 
-            Quantity: quantity, Bought_Date: dateBought, Expiry_Date: expiryDate, image_url: uploadedImage, user_id: user.id }).select().single();
+            Quantity: quantity, Expiry_Date: expiryDate, image_url: uploadedImage, user_id: user.id }).select().single();
 
         if (error != null) {
             setLoading(false);
@@ -115,7 +113,6 @@ export default function AddNewFood() {
         setName('');
         setBrand('');
         setQty('');
-        setDateBought('');
         setExpiry('');
         setImage(null);
     }
@@ -177,7 +174,7 @@ export default function AddNewFood() {
          value={quantity} onChangeText={setQty} />
 
         <Text style={styles.Text}>Expiry Date: </Text>
-        <Text>{`Date:  ${expiryDate? moment(expiryDate).format("MM/DD/YYYY"):"Please select date"}`}</Text>
+        <Text style={styles.Text}>{` ${expiryDate? moment(expiryDate).format("MM/DD/YYYY"):"Please select date"}`}</Text>
         <Button onPress={showDatePicker}>Select Date</Button>
         <DateTimePicker isVisible={isVisible} mode="date" onConfirm={handleExpiryConfirm} onCancel={hideDatePicker}/>
 
@@ -186,10 +183,12 @@ export default function AddNewFood() {
         <Button onPress={handleAddImage}>Add Image</Button>
         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
 
-        <Button onPress={handleSubmit}>Submit</Button>
-        {loading && <ActivityIndicator />}
+        <Button onPress={clear}>Clear</Button> 
 
-        <Button onPress={clear}>Clear</Button>        
+        <Button onPress={handleSubmit}>Submit</Button>
+        {errMsg !== "" && <Text style={styles.Text}>{errMsg}</Text>}
+        {loading && <ActivityIndicator />}
+     
     </ScrollView>
     </SafeAreaView>
 }
