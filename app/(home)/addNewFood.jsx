@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Image, ScrollView, StyleSheet, RefreshControl, SafeAreaView } from "react-native";
+import { Image, ScrollView, StyleSheet, SafeAreaView } from "react-native";
 import { Text, TextInput, Button, ActivityIndicator, } from "react-native-paper";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../contexts/auth";
+import DateTimePicker from "react-native-modal-datetime-picker";
 //import { useRouter } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
 
@@ -13,6 +14,7 @@ export default function AddNewFood() {
     const [quantity, setQty] = useState('');
     const [dateBought, setDateBought] = useState('');
     const [expiryDate, setExpiry] = useState('');
+    const [isVisible, setVisibility] = useState(false);
     const [errMsg, setErrMsg] = useState('');
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
@@ -117,6 +119,19 @@ export default function AddNewFood() {
         setImage(null);
     }
 
+    const showDatePicker = () => {
+        setVisibility(true);
+    }
+
+    const hideDatePicker = () => {
+        setVisibility(false);
+    }
+
+    const handleExpiryConfirm = date => {
+        setExpiry(date);
+        hideDatePicker();
+    }
+
     const styles = StyleSheet.create({
         Input: {
             borderRadius: 10,
@@ -159,13 +174,11 @@ export default function AddNewFood() {
         <Text style={styles.Text}>Quantity (Input a number): </Text>
         <TextInput style={styles.Input} clearButtonMode="always" keyboardType="numeric"
          value={quantity} onChangeText={setQty} />
-    
-        <Text style={styles.Text}>Date Bought: </Text>
-        <TextInput style={styles.Input} clearButtonMode="always" value={dateBought} onChangeText={setDateBought} />
 
         <Text style={styles.Text}>Expiry Date: </Text>
-        <TextInput style={styles.Input} clearButtonMode="always" value={expiryDate} onChangeText={setExpiry} />
-        {errMsg !== '' && <Text style={styles.Error}>{errMsg}</Text>}
+        <Text>{`Date:  ${expiryDate? moment(expiryDate).format("MM/DD/YYYY"):"Please select date"}`}</Text>
+        <Button onPress={showDatePicker}>Select Date</Button>
+        <DateTimePicker isVisible={isVisible} mode="date" onConfirm={handleExpiryConfirm} onCancel={hideDatePicker}/>
 
         <Button onPress={handleCameraImage}>Camera</Button>
 
