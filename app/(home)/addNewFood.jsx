@@ -21,6 +21,7 @@ export default function AddNewFood() {
     //const router = useRouter();
     const [refreshing, setRefreshing] = React.useState(false);
 
+    // clears the whole form with data written
     const clear = async () => {
         setName('');
         setBrand('');
@@ -36,7 +37,9 @@ export default function AddNewFood() {
         }, 2000);
       }, []);
 
+      // handle camera image allows users to make use of their phone cameras to take pictures
     const handleCameraImage = async () => {
+        // ask for permssion to use camera
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
         if (permissionResult.granted === false) {
@@ -55,7 +58,9 @@ export default function AddNewFood() {
         }
     }
 
+    // handle add image allows users to make use of thier phone image gallery to choose pictures
     const handleAddImage = async () => {
+        //ask for permission to access imgae gallery
         const permission = ImagePicker.requestMediaLibraryPermissionsAsync();
 
         if (permission.granted === false) {
@@ -74,7 +79,9 @@ export default function AddNewFood() {
         }
     }
 
+    // handle submit allows users to upload their data to the database
     const handleSubmit = async () => {
+        // Will set off error message is product name and expiry date is empty
         setErrMsg('');
         if (productName === '') {
             setErrMsg('Product Name cannot be empty')
@@ -87,6 +94,7 @@ export default function AddNewFood() {
 
         setLoading(true);
         let uploadedImage = null;
+        // uploads food item image to supabase storage
         if (image != null) {
             const { data, error } = await supabase.storage.from('images').upload(`${new Date().getTime()}`, { uri: image, type: 'jpg', name: 'name.jpg' });
 
@@ -99,6 +107,7 @@ export default function AddNewFood() {
             const { data: { publicUrl } } = supabase.storage.from('images').getPublicUrl(data.path);
             uploadedImage = publicUrl;
         }
+        // uploads food item data to supabase table 
         const { error } = await supabase.from('ExistingFood').insert({Product_Name: productName, Product_Brand: productBrand, 
             Quantity: quantity, Expiry_Date: expiryDate, image_url: uploadedImage, user_id: user.id }).select().single();
 
@@ -117,14 +126,17 @@ export default function AddNewFood() {
         setImage(null);
     }
 
+    // allow the date picker to appear
     const showDatePicker = () => {
         setVisibility(true);
     }
 
+    // hides the date picker
     const hideDatePicker = () => {
         setVisibility(false);
     }
-
+    
+    // set date for expiry date of food item
     const handleExpiryConfirm = date => {
         setExpiry(date);
         hideDatePicker();
