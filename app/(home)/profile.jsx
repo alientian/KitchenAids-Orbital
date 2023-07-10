@@ -8,6 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import NotificationScreen from "./notification";
 import { TabView, SceneMap } from 'react-native-tab-view';
 
+// Profile screen showing email and username 
 export default function Profile() {
     const logo = require("../(auth)/New.png")
     const [username, setUsername] = useState('');
@@ -21,6 +22,7 @@ export default function Profile() {
     const [refreshing, setRefreshing] = useState(false);
     const [avatar, setAvatar] = useState(null);
 
+    // Displays user's email
     const fetchTodo = async () => {
         const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
         console.log(data);
@@ -53,6 +55,7 @@ export default function Profile() {
         }
     }
 
+    // allows user to update their username and saves it 
     const handleSave = async () => {
         setErrMsg('');
         if (username === '') {

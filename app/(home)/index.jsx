@@ -3,11 +3,13 @@ import { supabase } from '../../lib/supabase';
 import { useEffect, useState } from 'react';
 import { Text, Button, ActivityIndicator} from 'react-native-paper';
 
+// Shows all food item
 export default function IndexScreen() {
     const [productName, setProductName] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    // Fetches all food data of the corresponding user id
     async function fetchTodos() {
         setRefreshing(true);
         let { data } = await supabase.from('ExistingFood').select('*');
@@ -26,6 +28,7 @@ export default function IndexScreen() {
         }
     }, [refreshing]);
 
+    // Deletes food data of selected item
     async function handleDelete(id) {
         setLoading(true);
         const { error } = await supabase.from('ExistingFood').delete().eq('id', id);

@@ -3,6 +3,7 @@ import React from 'react'
 
 let id = 0;
 
+// Shopping list 
 const Todo = props => (
     <View style = {styles.item}>
         <View style = {styles.left}>

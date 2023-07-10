@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase';
 import { useEffect, useState } from 'react';
 import { Text, Button, ActivityIndicator} from 'react-native-paper';
 
+// Filters out food that are expiring 
 export default function ExpiringScreen() {
     const [productName, setProductName] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
@@ -15,6 +16,7 @@ export default function ExpiringScreen() {
         setDate(date);
     }, []);
 
+    // Fetches data from the current table in supabase and filter out food that has dates one month away from current date
     async function fetchTodos() {
         setRefreshing(true);
         let { data } = await supabase.from('ExistingFood').select('*').lte('Expiry_Date', date);
@@ -33,6 +35,7 @@ export default function ExpiringScreen() {
         }
     }, [refreshing]);
 
+    // Deletes food data from supabase and UI
     const handleDelete = async (id) => {
         setLoading(true);
         const { error } = await supabase.from('ExistingFood').delete().eq('id', id);

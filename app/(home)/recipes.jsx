@@ -16,11 +16,13 @@ import {
   Linking
 } from 'react-native';
 
+// Recipe screen to allow users to search for their recipes
 const App = () => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
 
+  // Fetches data from online API
   useEffect(() => {
     fetch('https://api.edamam.com/api/recipes/v2?type=public&app_id=dd2d6729&app_key=849e34f3737291063092f61ddda7d287&ingr=3%2B&cuisineType=Asian')
       .then((response) => response.json())
