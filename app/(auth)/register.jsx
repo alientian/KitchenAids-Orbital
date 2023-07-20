@@ -66,6 +66,7 @@ export default function Register() {
       <Text style={styles.Email}>Email</Text>
       <TextInput
         style={styles.Input}
+        placeholder="Email"
         autoCapitalize="none"
         textContentType="emailAddress"
         value={email}
@@ -74,6 +75,7 @@ export default function Register() {
       <Text style={styles.Email}>Password</Text>
       <TextInput
         style={styles.Input}
+        placeholder="Password"
         secureTextEntry
         autoCapitalize="none"
         textContentType="password"

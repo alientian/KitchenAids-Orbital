@@ -4,14 +4,16 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import IndexScreen from "./index";
 import ExpiringScreen from "./expiring";
 
-// Two tabs: one for all food and one for expiring food items
-const renderScene = SceneMap({
-  first: () => <IndexScreen />,
-  second: () => <ExpiringScreen />,
-});
 
-export default function TabViewScreen() {
+
+export default function HomeScreen() {
   const layout = useWindowDimensions();
+
+  // Two tabs: one for all food and one for expiring food items
+  const renderScene = SceneMap({
+    first: () => <IndexScreen />,
+    second: () => <ExpiringScreen />,
+  });
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
