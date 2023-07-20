@@ -56,7 +56,10 @@ Tech Stack
 2. Javascript
 3. Node.js
 4. Supabase
- 
+
+Sequence diagram
+
+<img width="740" alt="Screenshot 2023-07-20 at 11 19 10 AM" src="https://github.com/alientian/KitchenAids-Orbital/assets/122381620/0fe7350e-1d22-42d9-a4ff-c6eae30809e0">
 
 Activity diagram
 
