@@ -30,13 +30,6 @@ export default function AddNewFood() {
     setImage(null);
   };
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
   // handle camera image allows users to make use of their phone cameras to take pictures
   const handleCameraImage = async () => {
     // ask for permssion to use camera
