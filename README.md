@@ -15,10 +15,10 @@ How to try our app:
 1. Refer to our code here: https://gitfront.io/r/user-6304479/RkG5HorVijxt/KitchenAids-Orbital
 2. Click on “clone” and copy the url
 3. Clone the code by entering: git clone [url] in the terminal 
-4. Open the file from vscode 
-5. Run npx expo start in the terminal
-6. Run i in terminal or scan the QR code to run the emulator (only works for IOS), notifications and camera only works on iphone!
-7. If it doesn’t work, try to run npm install and repeat step 5 and 6 again :)
+4. Open the file from vscode
+5. Run npm install in the terminal
+6. Run npx expo start in the terminal
+7. Run i in terminal or scan the QR code to run the emulator (only works for IOS), notifications and camera only works on iphone!
 
 Features 
 Features
