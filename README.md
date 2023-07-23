@@ -64,3 +64,7 @@ Sequence diagram
 Activity diagram
 
 ![activity diagram drawio](https://github.com/alientian/KitchenAids-Orbital/assets/122421126/5dfbf0a2-1846-4267-8ab8-ac4b48f24afc)
+
+Citations:
+1. notifications.jsx: https://snack.expo.dev/@charliecruzan/push-notifications
+2. 
