@@ -12,30 +12,30 @@ jest.mock("../../lib/supabase", () => ({
   }));
 
 describe("Register", () => {
-    it("submits the form with valid email and password", async () => {
-        const { getByText, getByPlaceholderText } = render(<Register />);
+  it("submits the form with valid email and password", async () => {
+      const { getByText, getByPlaceholderText } = render(<Register />);
+
+    // Fill in the email and password fields
+      const emailInput = getByPlaceholderText("Email");
+      const passwordInput = getByPlaceholderText("Password");
+      fireEvent.changeText(emailInput, "test@example.com");
+      fireEvent.changeText(passwordInput, "password123");
         
-        // Fill in the email and password fields
-        const emailInput = getByPlaceholderText("Email");
-        const passwordInput = getByPlaceholderText("Password");
-        fireEvent.changeText(emailInput, "test@example.com");
-        fireEvent.changeText(passwordInput, "password123");
+      // Submit the form
+      const submitButton = getByText("Submit");
+      fireEvent.press(submitButton);
         
-        // Submit the form
-        const submitButton = getByText("Submit");
-        fireEvent.press(submitButton);
-        
-        // Wait for the form submission to complete
-        await waitFor(() => {
-          expect(supabase.auth.signUp).toHaveBeenCalledWith({
-            email: "test@example.com",
-            password: "password123",
-          });
+      // Wait for the form submission to complete
+      await waitFor(() => {
+        expect(supabase.auth.signUp).toHaveBeenCalledWith({
+          email: "test@example.com",
+          password: "password123",
         });
-        
-        // // Check for any error message
-        // expect(getByText("")).not.toBeVisible();
-    });
+      });
+          
+      // // Check for any error message
+      // expect(getByText("")).not.toBeVisible();
+  });
 
   it("displays an error message for empty email", async () => {
     const { getByText } = render(<Register />);

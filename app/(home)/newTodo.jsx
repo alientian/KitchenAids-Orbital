@@ -89,7 +89,6 @@ export default class App extends React.Component {
           <TextInput
             style={styles.input}
             placeholder="Enter item to buy"
-            keyboardType="alphanumeric"
             value={this.state.text}
             onChangeText={(text) => this.setState({ text })}
           />
