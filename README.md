@@ -57,6 +57,10 @@ Tech Stack
 3. Node.js
 4. Supabase
 
+Architectural diagram
+<img width="539" alt="Screenshot 2023-07-23 at 3 41 11 PM" src="https://github.com/alientian/KitchenAids-Orbital/assets/122381620/8ac735d4-e9c9-4389-b954-8f389b7a53b6">
+
+
 Sequence diagram
 
 <img width="740" alt="Screenshot 2023-07-20 at 11 19 10 AM" src="https://github.com/alientian/KitchenAids-Orbital/assets/122381620/0fe7350e-1d22-42d9-a4ff-c6eae30809e0">
