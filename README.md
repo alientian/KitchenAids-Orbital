@@ -67,4 +67,4 @@ Activity diagram
 
 Citations:
 1. notifications.jsx: https://snack.expo.dev/@charliecruzan/push-notifications
-2. 
+2. recipes.jsx: https://snack.expo.dev/@aboutreact/react-native-search-bar-filter-on-listview
