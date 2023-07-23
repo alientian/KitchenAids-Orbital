@@ -65,7 +65,7 @@ Activity diagram
 
 ![activity diagram drawio](https://github.com/alientian/KitchenAids-Orbital/assets/122421126/5dfbf0a2-1846-4267-8ab8-ac4b48f24afc)
 
-Citations:
+Citations
 1.home.jsx: https://reactnavigation.org/docs/tab-view/
 2. notifications.jsx: https://snack.expo.dev/@charliecruzan/push-notifications
 3. recipes.jsx: https://snack.expo.dev/@aboutreact/react-native-search-bar-filter-on-listview
