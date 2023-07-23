@@ -58,6 +58,7 @@ Tech Stack
 4. Supabase
 
 Architectural diagram
+
 <img width="539" alt="Screenshot 2023-07-23 at 3 41 11 PM" src="https://github.com/alientian/KitchenAids-Orbital/assets/122381620/8ac735d4-e9c9-4389-b954-8f389b7a53b6">
 
 
