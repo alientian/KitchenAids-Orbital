@@ -68,3 +68,4 @@ Activity diagram
 Citations:
 1. notifications.jsx: https://snack.expo.dev/@charliecruzan/push-notifications
 2. recipes.jsx: https://snack.expo.dev/@aboutreact/react-native-search-bar-filter-on-listview
+3. newTodo.jsx: https://github.com/qbentil/Todo-Mobile-App--React-Native-/tree/master#cs50-mobile-app-development-course
