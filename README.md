@@ -74,4 +74,5 @@ Citations:
 1. home.jsx: https://reactnavigation.org/docs/tab-view/
 2. notifications.jsx: https://snack.expo.dev/@charliecruzan/push-notifications
 3. recipes.jsx: https://snack.expo.dev/@aboutreact/react-native-search-bar-filter-on-listview
-4. newTodo.jsx: https://github.com/qbentil/Todo-Mobile-App--React-Native-/tree/master#cs50-mobile-app-development-course
+                https://www.edamam.com
+5. newTodo.jsx: https://github.com/qbentil/Todo-Mobile-App--React-Native-/tree/master#cs50-mobile-app-development-course
